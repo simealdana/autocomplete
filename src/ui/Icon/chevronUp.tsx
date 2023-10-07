@@ -2,7 +2,7 @@ import React from "react";
 import Icon from "./icon";
 import { IconProps } from "./icon.types";
 
-const ChevronUp: React.FC<IconProps> = (props) => {
+export const ChevronUp: React.FC<IconProps> = (props) => {
   return (
     <Icon {...props}>
       <path

@@ -1,7 +1,7 @@
 import React from "react";
-import { IconProps } from "./icon.types";
+import { IconPropsContainer } from "./icon.types";
 
-const Icon: React.FC<IconProps> = ({
+export const Icon: React.FC<IconPropsContainer> = ({
   strokeWidth = 1.5,
   strokeColor = "currentColor",
   className = "",
