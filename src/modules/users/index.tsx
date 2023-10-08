@@ -14,7 +14,7 @@ const getUsers = async (): Promise<User[]> => {
 const filterUsers = async (search: string) => {
   const users: User[] = await getUsers();
   return users.filter((user: User) => {
-    return user.name.includes(search);
+    return user.name.toLocaleLowerCase().includes(search);
   });
 };
 
@@ -24,8 +24,8 @@ const Users: FC = () => {
   };
   return (
     <AutoComplete
-      onChange={filterUsers}
-      keyExtractor="name"
+      onFetchOptions={filterUsers}
+      keyField="name"
       onSelected={onSelected}
     />
   );

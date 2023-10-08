@@ -11,14 +11,17 @@ import HighlightedOption from "./components/HighlightedOption";
 const DEBOUNCE_TIME = 500;
 
 const AutoComplete: FC<TAutoCompleteProps> = ({
-  placerholder,
-  onChange,
+  placeholder,
+  keyField,
+  onFetchOptions,
   onSelected,
   keyExtractor,
+  defaultOptions = [],
+  onError,
 }) => {
   const [value, setValue] = useState<string>("");
   const [search, setSearch] = useState<string>("");
-  const [options, setOptions] = useState<string[]>([]);
+  const [options, setOptions] = useState<string[]>(defaultOptions);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   const [showOptions, setShowOptions] = useState<boolean>(true);
@@ -95,19 +98,19 @@ const AutoComplete: FC<TAutoCompleteProps> = ({
     const handleFilter = async () => {
       setLoading(true);
       try {
-        if (onChange) {
-          const filterList = await onChange(debouncedValue);
+        if (onFetchOptions) {
+          const filterList = await onFetchOptions(debouncedValue);
           const newOptions = filterList.map((item) => {
-            if (keyExtractor && typeof keyExtractor === "function") {
+            if (keyExtractor) {
               return keyExtractor(item);
             }
-            if (keyExtractor && typeof keyExtractor === "string") {
+            if (keyField) {
               if (
                 typeof item === "object" &&
                 item !== null &&
-                keyExtractor in item
+                keyField in item
               ) {
-                return (item as Record<string, unknown>)[keyExtractor];
+                return (item as Record<string, unknown>)[keyField];
               }
               return item;
             }
@@ -115,16 +118,17 @@ const AutoComplete: FC<TAutoCompleteProps> = ({
           }) as string[];
           setOptions(newOptions);
         }
-      } catch (_) {
+      } catch (error) {
         setOptions([]);
         setHasError(true);
+        if (onError) onError(error as Error);
       } finally {
         setLoading(false);
       }
     };
 
     handleFilter();
-  }, [debouncedValue, onChange, keyExtractor]);
+  }, [debouncedValue, onFetchOptions, keyExtractor]);
 
   useEffect(() => {
     if (focusedIndex !== null && optionRefs.current[focusedIndex]) {
@@ -157,7 +161,7 @@ const AutoComplete: FC<TAutoCompleteProps> = ({
         <input
           type="text"
           className="input-full-width"
-          placeholder={placerholder}
+          placeholder={placeholder}
           onChange={onSearch}
           onClick={handleToggleShowOptions}
           onKeyDown={handleKeyDown}

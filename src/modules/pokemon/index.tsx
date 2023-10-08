@@ -25,7 +25,7 @@ const filterPokemon = async (search: string) => {
   const pokemonList: IPokemonResponde = await getPokemon();
   const { results } = pokemonList;
   return results.filter((pokemon) => {
-    return pokemon.name.includes(search);
+    return pokemon.name.toLocaleLowerCase().includes(search);
   });
 };
 
@@ -35,8 +35,8 @@ const Pokemon: FC = () => {
   };
   return (
     <AutoComplete
-      onChange={filterPokemon}
-      keyExtractor="name"
+      onFetchOptions={filterPokemon}
+      keyField="name"
       onSelected={onSelected}
     />
   );

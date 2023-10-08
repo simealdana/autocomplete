@@ -1,8 +1,11 @@
 export type TAutoCompleteProps = {
-  placerholder?: string;
+  placeholder?: string;
   onSelected: (value: string) => void;
-  onChange: (value: string) => Promise<unknown[]>;
-  keyExtractor: string | ((item: unknown) => string);
+  onFetchOptions: (value: string) => Promise<unknown[]>;
+  keyField?: string;
+  keyExtractor?: (item: unknown) => string;
+  defaultOptions?: string[];
+  onError?: (error: Error) => void;
 };
 
 export enum KEYBOARDKEYS {
