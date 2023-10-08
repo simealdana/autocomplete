@@ -10,6 +10,7 @@ const DEBOUNCE_TIME = 500;
 const AutoComplete: FC<TAutoCompleteProps> = ({
   placerholder,
   onChange,
+  onSelected,
   keyExtractor,
 }) => {
   const [value, setValue] = useState<string>("");
@@ -140,7 +141,13 @@ const AutoComplete: FC<TAutoCompleteProps> = ({
     return () => {
       window.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, []);
+
+  useEffect(() => {
+    if (onSelected && value) {
+      onSelected(value);
+    }
+  }, [value]);
 
   return (
     <div className="select-wrapper" ref={wrapperRef}>

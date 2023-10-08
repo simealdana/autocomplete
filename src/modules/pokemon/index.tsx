@@ -13,8 +13,10 @@ interface IPokemonResponde {
   results: IPokemon[];
 }
 
+const POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/?limit=100";
+
 const getPokemon = async (): Promise<IPokemonResponde> => {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=100`);
+  const response = await fetch(POKEMON_URL);
   const pokemon = await response.json();
   return pokemon;
 };
@@ -28,7 +30,16 @@ const filterPokemon = async (search: string) => {
 };
 
 const Pokemon: FC = () => {
-  return <AutoComplete onChange={filterPokemon} keyExtractor="name" />;
+  const onSelected = (pokemonName: string) => {
+    console.log(pokemonName);
+  };
+  return (
+    <AutoComplete
+      onChange={filterPokemon}
+      keyExtractor="name"
+      onSelected={onSelected}
+    />
+  );
 };
 
 export default Pokemon;

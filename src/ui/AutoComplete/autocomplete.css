@@ -13,6 +13,7 @@
     font-size: 16px;
     outline: none;
     transition: border-color 0.3s ease;
+    background-color: white;
 }
 
 .input-full-width:focus {
@@ -24,6 +25,7 @@
     display: flex; 
     align-items: center; 
     width: 100%; 
+
 }
 
 .icon-container {
@@ -35,6 +37,7 @@
     align-items: center;
     justify-content: flex-end;
     transform: translateY(-50%); 
+    background-color: white;
 }
 
 .icon {

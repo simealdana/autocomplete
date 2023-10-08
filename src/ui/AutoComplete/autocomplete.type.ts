@@ -1,6 +1,6 @@
 export type TAutoCompleteProps = {
   placerholder?: string;
-  value?: string;
+  onSelected: (value: string) => void;
   onChange: (value: string) => Promise<unknown[]>;
   keyExtractor: string | ((item: unknown) => string);
 };

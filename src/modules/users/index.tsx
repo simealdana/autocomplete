@@ -19,7 +19,16 @@ const filterUsers = async (search: string) => {
 };
 
 const Users: FC = () => {
-  return <AutoComplete onChange={filterUsers} keyExtractor="name" />;
+  const onSelected = (userName: string) => {
+    console.log(userName);
+  };
+  return (
+    <AutoComplete
+      onChange={filterUsers}
+      keyExtractor="name"
+      onSelected={onSelected}
+    />
+  );
 };
 
 export default Users;
