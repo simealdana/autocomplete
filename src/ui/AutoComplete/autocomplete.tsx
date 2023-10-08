@@ -1,9 +1,12 @@
 import { FC, useEffect, useRef, useState } from "react";
+
 import { TAutoCompleteProps, KEYBOARDKEYS } from "./autocomplete.type";
 import { useDebounce } from "../../services/hooks/useDebounce";
-import "./autocomplete.css";
 import { ChevronDown, ChevronUp } from "../Icon";
 import CloseIcon from "../Icon/closeIcon";
+
+import "./autocomplete.css";
+import HighlightedOption from "./components/HighlightedOption";
 
 const DEBOUNCE_TIME = 500;
 
@@ -85,7 +88,6 @@ const AutoComplete: FC<TAutoCompleteProps> = ({
   const clearValue = () => {
     setValue("");
     setSearch("");
-    setOptions([]);
     setShowOptions(false);
   };
 
@@ -147,7 +149,7 @@ const AutoComplete: FC<TAutoCompleteProps> = ({
     if (onSelected && value) {
       onSelected(value);
     }
-  }, [value]);
+  }, [onSelected, value]);
 
   return (
     <div className="select-wrapper" ref={wrapperRef}>
@@ -196,7 +198,7 @@ const AutoComplete: FC<TAutoCompleteProps> = ({
                   onMouseOver={() => setFocusedIndex(index)}
                   onClick={() => handleClickOption(option)}
                 >
-                  <span className="option-text">{option}</span>
+                  <HighlightedOption option={option} query={search} />
                 </li>
               ))
             )}
