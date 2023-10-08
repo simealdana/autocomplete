@@ -69,6 +69,16 @@ const AutoComplete: FC<TAutoCompleteProps> = ({
           setShowOptions(false);
         }
         break;
+      case KEYBOARDKEYS.Space:
+        e.preventDefault();
+        if (!value.trim()) {
+          handleToggleShowOptions();
+        }
+        break;
+      case KEYBOARDKEYS.Escape:
+        e.preventDefault();
+        setShowOptions(false);
+        break;
       default:
         break;
     }
@@ -206,6 +216,7 @@ const AutoComplete: FC<TAutoCompleteProps> = ({
                   className={`option ${
                     focusedIndex === index ? "highlighted" : ""
                   }`}
+                  ref={(el) => (optionRefs.current[index] = el)}
                   tabIndex={0}
                   key={index}
                   onMouseOver={() => setFocusedIndex(index)}

@@ -13,4 +13,5 @@ export enum KEYBOARDKEYS {
   ArrowUp = "ArrowUp",
   Enter = "Enter",
   Space = " ",
+  Escape = "Escape",
 }
