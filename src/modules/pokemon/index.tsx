@@ -1,3 +1,4 @@
+import { FC } from "react";
 import AutoComplete from "../../ui/AutoComplete/autocomplete";
 
 interface IPokemon {
@@ -26,7 +27,7 @@ const filterPokemon = async (search: string) => {
   });
 };
 
-const Pokemon = () => {
+const Pokemon: FC = () => {
   return <AutoComplete onChange={filterPokemon} keyExtractor="name" />;
 };
 
