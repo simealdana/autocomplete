@@ -1,12 +1,13 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef } from "react";
 
 import { TAutoCompleteProps, KEYBOARDKEYS } from "./autocomplete.type";
 import { useDebounce } from "../../services/hooks/useDebounce";
 import { ChevronDown, ChevronUp } from "../Icon";
 import CloseIcon from "../Icon/closeIcon";
+import HighlightedOption from "./components/HighlightedOption";
+import { useAutoCompleteReducer } from "./autocomplete.reducer";
 
 import "./autocomplete.css";
-import HighlightedOption from "./components/HighlightedOption";
 
 const DEBOUNCE_TIME = 500;
 
@@ -19,14 +20,22 @@ const AutoComplete: FC<TAutoCompleteProps> = ({
   defaultOptions = [],
   onError,
 }) => {
-  const [value, setValue] = useState<string>("");
-  const [search, setSearch] = useState<string>("");
-  const [options, setOptions] = useState<string[]>(defaultOptions);
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-
-  const [showOptions, setShowOptions] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [hasError, setHasError] = useState<boolean>(false);
+  const {
+    value,
+    search,
+    options,
+    focusedIndex,
+    showOptions,
+    loading,
+    hasError,
+    setValue,
+    setSearch,
+    setOptions,
+    setFocusedIndex,
+    setLoading,
+    setHasError,
+    setShowOptions,
+  } = useAutoCompleteReducer(defaultOptions);
 
   const debouncedValue = useDebounce<string>(search, DEBOUNCE_TIME);
 
